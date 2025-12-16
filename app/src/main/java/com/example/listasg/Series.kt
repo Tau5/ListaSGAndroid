@@ -1,5 +1,6 @@
 package com.example.listasg
 
+import android.media.Image
 import androidx.annotation.DrawableRes
 
 data class Series(
