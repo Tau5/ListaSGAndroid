@@ -1,8 +1,6 @@
 import com.example.listasg.R
 import com.example.listasg.Series
 
-context.getString(com.example.listasg.R.string.berserk)om.example.listasg
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,13 +17,16 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.window.core.layout.WindowSizeClass
 import com.example.listasg.ui.theme.ListaSGTheme
 
 class MainActivity : ComponentActivity() {
@@ -159,10 +160,11 @@ class MainActivity : ComponentActivity() {
             )
 
         )
+        setContent {
             ListaSGTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Surface(modifier = Modifier.padding(innerPadding)) {
-
+                        SeriesList(series)
                     }
                 }
             }
