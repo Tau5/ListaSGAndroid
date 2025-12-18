@@ -5,13 +5,27 @@ context.getString(com.example.listasg.R.string.berserk)om.example.listasg
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.listasg.ui.theme.ListaSGTheme
 
 class MainActivity : ComponentActivity() {
@@ -157,18 +171,47 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ListItem(series: Series, modifier: Modifier = Modifier) {
+fun SeriesCard(series: Series, modifier: Modifier = Modifier) {
+    var visible by remember {
+        mutableStateOf(true)
+    }
 
+    Card(onClick = { visible = !visible }) {
+        Column() {
+            Text(series.title)
+            Image(painterResource(series.image), contentDescription = null)
+            AnimatedVisibility(visible) {
+                Text(series.description)
+            }
+        }
+    }
 }
 
-fun VerticalList(series: List<Series>, modifier: Modifier = Modifier) {
-
+@Composable
+fun VerticalSeriesList(series: List<Series>, modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
+        items(series) {
+            SeriesCard(it)
+        }
+    }
 }
 
-fun HorizontalList(series: List<Series>, modifier: Modifier = Modifier) {
-
+@Composable
+fun HorizontalSeriesList(series: List<Series>, modifier: Modifier = Modifier) {
+    LazyRow(modifier = modifier) {
+        items(series) {
+            SeriesCard(it)
+        }
+    }
 }
 
-fun ItemsList(series: List<Series>, modifier: Modifier = Modifier) {
-
+@Composable
+fun SeriesList(series: List<Series>, modifier: Modifier = Modifier,
+               windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true).windowSizeClass) {
+    val useHorizonalList = windowSizeClass.isWidthAtLeastBreakpoint(WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND)
+    if (useHorizonalList) {
+        HorizontalSeriesList(series, modifier)
+    } else {
+        VerticalSeriesList(series, modifier)
+    }
 }
