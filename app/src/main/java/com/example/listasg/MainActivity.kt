@@ -1,5 +1,4 @@
-import com.example.listasg.R
-import com.example.listasg.Series
+package com.example.listasg
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -25,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.window.core.layout.WindowSizeClass
 import com.example.listasg.ui.theme.ListaSGTheme
 
@@ -175,7 +173,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun SeriesCard(series: Series, modifier: Modifier = Modifier) {
     var visible by remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
 
     Card(onClick = { visible = !visible }) {
